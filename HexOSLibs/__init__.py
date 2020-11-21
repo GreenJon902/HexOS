@@ -10,6 +10,7 @@ def setup_os():
         if os.path.isfile(os.path.join(Config.get("kivy", "log_dir"), i)) and 'kivy' in i:
             os.remove(os.path.join(Config.get("kivy", "log_dir"), i))
 
+
 def start_os():
     import HexOSLibs.__main__
 
