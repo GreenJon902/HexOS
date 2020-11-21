@@ -1,5 +1,7 @@
 import os
 
+from sys_config import sysConfig
+
 
 def setup_os():
     from kivy.config import Config
@@ -9,9 +11,17 @@ def setup_os():
         if os.path.isfile(os.path.join(Config.get("kivy", "log_dir"), i)) and 'kivy' in i:
             os.remove(os.path.join(Config.get("kivy", "log_dir"), i))
 
+    from kivy.logger import Logger
+
+    Logger.info(sysConfig.get("main", "name") + ": HexOS's logger has been setup")
+
 
 def start_os():
-    from HexOSLibs.__main__ import HexOS
+    from HexOS.__main__ import HexOS
+
+    from kivy.logger import Logger
+
+    Logger.info(sysConfig.get("main", "name") + ": HexOS is starting")
 
     HexOS().run()
 

@@ -1,6 +1,6 @@
 from kivy.app import App
 
-from HexOSLibs.window import Window
+from HexOS.window import Window
 from sys_config import sysConfig
 
 
