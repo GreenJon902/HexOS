@@ -1,8 +1,7 @@
 import os
-import sys
+from configparser import ConfigParser
 
 from appdirs import user_data_dir
-from configparser import ConfigParser
 
 import HexOSLibs
 
