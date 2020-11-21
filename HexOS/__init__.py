@@ -1,6 +1,6 @@
 import os
 
-from sys_config import sysConfig
+from globals import sysConfig
 
 
 def setup_os():

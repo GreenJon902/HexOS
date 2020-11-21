@@ -3,7 +3,7 @@ import sys
 from appdirs import user_data_dir
 
 import HexOS
-from sys_config import sysConfig
+from globals import sysConfig
 
 sys.path.append(os.getcwd())
 

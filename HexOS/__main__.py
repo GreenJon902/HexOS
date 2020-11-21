@@ -1,7 +1,7 @@
 from kivy.app import App
 
 from HexOS.window import Window
-from sys_config import sysConfig
+from globals import sysConfig
 
 
 class HexOS(App):
