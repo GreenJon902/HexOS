@@ -2,11 +2,11 @@ from io import BytesIO
 
 from PIL import ImageGrab
 from kivy.core.image import Image as CoreImage
-from kivy.uix.widget import Widget
 from kivy.core.window import Window as CoreWindow
+from kivy.uix.floatlayout import FloatLayout
 
 
-class Window(Widget):
+class Window(FloatLayout):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(*args, **kwargs)
 

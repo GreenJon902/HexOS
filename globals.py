@@ -1,6 +1,6 @@
 from configparser import ConfigParser
 
 sysConfig = ConfigParser()
-sysConfig.read("data/config_files/sysConfig.ini")
+sysConfig.read("data/fixed_config_files/sysConfig.ini")
 
 path = ""
