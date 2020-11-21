@@ -1,6 +1,7 @@
 from io import BytesIO
 
 from PIL import ImageGrab
+from kivy.clock import Clock
 from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window as CoreWindow
 from kivy.uix.floatlayout import FloatLayout
@@ -12,11 +13,13 @@ class Window(FloatLayout):
 
         CoreWindow.bind(left=self.on_pos, top=self.on_pos)
 
+        Clock.schedule_once(self.take_screenshot, 0)
+
     def on_pos(self, _, pos):
         self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, \
                                             (CoreWindow.top + CoreWindow.height) - self.ids["parentScreenImage"].size[1]
 
-    def on_size(self, _, size):
+    def take_screenshot(self, _=None):
         img = ImageGrab.grab()
         data = BytesIO()
         img.save(data, format='png')
