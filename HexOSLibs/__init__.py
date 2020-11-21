@@ -12,7 +12,9 @@ def setup_os():
 
 
 def start_os():
-    import HexOSLibs.__main__
+    from HexOSLibs.__main__ import HexOS
+
+    HexOS()
 
 
 __all__ = ["setup_os",
