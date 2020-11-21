@@ -1,5 +1,4 @@
 import os
-import time
 from configparser import ConfigParser
 
 from appdirs import user_data_dir
