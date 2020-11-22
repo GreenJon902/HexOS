@@ -22,7 +22,8 @@ class Window(FloatLayout):
 
 
         Clock.schedule_once(self.take_whole_screen_screenshot, 0)
-        Clock.schedule_interval(self.take_not_window_screenshot, 10)
+        Clock.schedule_interval(self.take_not_window_screenshot, int(sysConfig.get("background_image",
+                                                                                   "open_refresh_rate")))
 
     def on_pos(self, *args):
         self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, \
@@ -73,7 +74,8 @@ class Window(FloatLayout):
 
 
     def take_screenshot_clock_start(self, *args):
-        self.screenShotClock = Clock.schedule_interval(self.take_screenshot, 1)
+        self.screenShotClock = Clock.schedule_interval(self.take_screenshot,
+                                                       int(sysConfig.get("background_image", "minimized_refresh_rate")))
 
     def take_screenshot_clock_stop(self, *args):
         if self.screenShotClock is not None:
