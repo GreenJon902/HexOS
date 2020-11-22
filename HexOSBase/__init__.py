@@ -13,7 +13,7 @@ def setup_os():
 
     from kivy.logger import Logger
 
-    Logger.info(sysConfig.get("main", "name") + ": HexOS's logger has been setup")
+    Logger.info(sysConfig.get("main", "name") + ": HexOSBase's logger has been setup")
 
 
     from kivy.lang.builder import Builder
