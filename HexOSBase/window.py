@@ -22,53 +22,58 @@ class Window(FloatLayout):
 
 
         Clock.schedule_once(self.take_whole_screen_screenshot, 0)
+        Clock.schedule_once(CoreWindow.hide, 2)
+        Clock.schedule_once(CoreWindow.show, 5)
         Clock.schedule_interval(self.take_not_window_screenshot, int(sysConfig.get("background_image",
                                                                                    "open_refresh_rate")))
 
     def on_pos(self, *args):
-        self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, \
-                                            (CoreWindow.top + CoreWindow.height) - self.ids["parentScreenImage"].size[1]
+        if bool(sysConfig.get("background_image", "see_through")):
+            self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, \
+                                                (CoreWindow.top + CoreWindow.height) - self.ids["parentScreenImage"].size[1]
 
     def take_whole_screen_screenshot(self, *args):
-        img = ImageGrab.grab()
-        data = BytesIO()
-        img.save(data, format="png")
-        data.seek(0)
-        img = CoreImage(BytesIO(data.read()), ext='png')
+        if bool(sysConfig.get("background_image", "see_through")):
+            img = ImageGrab.grab()
+            data = BytesIO()
+            img.save(data, format="png")
+            data.seek(0)
+            img = CoreImage(BytesIO(data.read()), ext='png')
 
-        self.ids["parentScreenImage"].texture = img.texture
-        self.ids["parentScreenImage"].size = img.size
-        self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, 0 - CoreWindow.top
+            self.ids["parentScreenImage"].texture = img.texture
+            self.ids["parentScreenImage"].size = img.size
+            self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, 0 - CoreWindow.top
 
     def take_not_window_screenshot(self, *args):
-        img = ImageGrab.grab()
+        if bool(sysConfig.get("background_image", "see_through")):
+            img = ImageGrab.grab()
 
-        try:
-            im = CoreImage(self.ids["parentScreenImage"].texture)
+            try:
+                im = CoreImage(self.ids["parentScreenImage"].texture)
 
-        except Exception:
-            Logger.warning(sysConfig.get("main", "parent_name") + ": Window background image does not have a texture")
-            return
+            except Exception:
+                Logger.warning(sysConfig.get("main", "parent_name") + ": Window background image does not have a texture")
+                return
 
-        data = BytesIO()
-        im.save(data, fmt="png")
-        data.seek(0)
-        im = PILImage.open(data)
+            data = BytesIO()
+            im.save(data, fmt="png")
+            data.seek(0)
+            im = PILImage.open(data)
 
-        wx, wy, ww, wh = CoreWindow.left, CoreWindow.top, CoreWindow.width, CoreWindow.height
-        remAmount = int(sysConfig.get("background_image", "crop_distance"))
-        remAmountTop = int(sysConfig.get("background_image", "crop_distance_top"))
-        x, y, x2, y2 = wx - remAmount, wy - remAmountTop, wx + ww + remAmount, wy + wh + remAmount
-        im = im.crop((x, y, x2, y2))
+            wx, wy, ww, wh = CoreWindow.left, CoreWindow.top, CoreWindow.width, CoreWindow.height
+            remAmount = int(sysConfig.get("background_image", "crop_distance"))
+            remAmountTop = int(sysConfig.get("background_image", "crop_distance_top"))
+            x, y, x2, y2 = wx - remAmount, wy - remAmountTop, wx + ww + remAmount, wy + wh + remAmount
+            im = im.crop((x, y, x2, y2))
 
-        img.paste(im, (x, y))
+            img.paste(im, (x, y))
 
-        data = BytesIO()
-        img.save(data, format="png")
-        data.seek(0)
-        img = CoreImage(BytesIO(data.read()), ext='png')
+            data = BytesIO()
+            img.save(data, format="png")
+            data.seek(0)
+            img = CoreImage(BytesIO(data.read()), ext='png')
 
-        self.ids["parentScreenImage"].texture = img.texture
+            self.ids["parentScreenImage"].texture = img.texture
 
 
 

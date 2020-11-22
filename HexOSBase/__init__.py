@@ -17,11 +17,11 @@ def setup_os():
 
 
     from kivy.lang.builder import Builder
-    Builder.load_file(os.path.join(path, "data/kv_files/window.kv"))
+    Builder.load_file(os.path.join(path, "HexOSBase/data/kv_files/window.kv"))
 
 
 def start_os():
-    from HexOS.__main__ import HexOS
+    from HexOSBase.__main__ import HexOS
 
     from kivy.logger import Logger
 
