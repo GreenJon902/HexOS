@@ -1,6 +1,6 @@
 import os
 
-import globals
+from globals import path, sysConfig
 
 
 def setup_os():
@@ -13,11 +13,11 @@ def setup_os():
 
     from kivy.logger import Logger
 
-    Logger.info(globals.sysConfig.get("main", "name") + ": HexOS's logger has been setup")
+    Logger.info(sysConfig.get("main", "name") + ": HexOS's logger has been setup")
 
 
     from kivy.lang.builder import Builder
-    Builder.load_file(os.path.join(globals.path, "data/kv_files/window.kv"))
+    Builder.load_file(os.path.join(path, "data/kv_files/window.kv"))
 
 
 def start_os():
@@ -25,8 +25,8 @@ def start_os():
 
     from kivy.logger import Logger
 
-    Logger.info(globals.sysConfig.get("main", "parent_name") + ": " +
-                globals.sysConfig.get("main", "parent_name") + "is starting")
+    Logger.info(sysConfig.get("main", "parent_name") + ": " +
+                sysConfig.get("main", "parent_name") + "is starting")
 
     HexOS().run()
 
