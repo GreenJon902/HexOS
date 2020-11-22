@@ -9,6 +9,3 @@ class HexOS(App):
 
     def build(self):
         return Window()
-
-    def on_stop(self):
-        print("Fe")

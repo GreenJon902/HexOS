@@ -25,7 +25,8 @@ def start_os():
 
     from kivy.logger import Logger
 
-    Logger.info(globals.sysConfig.get("main", "name") + ": HexOS is starting")
+    Logger.info(globals.sysConfig.get("main", "parent_name") + ": " +
+                globals.sysConfig.get("main", "parent_name") + "is starting")
 
     HexOS().run()
 
