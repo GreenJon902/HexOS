@@ -27,11 +27,11 @@ class Window(FloatLayout):
     def on_parent(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
             self.ids["ParentScreenImage"].opacity = 1
-            self.ids["SeeThrough"].active = True
+            self.ids["SeeThrough"].state = "down"
             
         else:
             self.ids["ParentScreenImage"].opacity = 0
-            self.ids["SeeThrough"].active = False
+            self.ids["SeeThrough"].state = "normal"
 
     def on_pos(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
@@ -102,6 +102,12 @@ class Window(FloatLayout):
             self.screenShotClock = None
 
     def see_through_flip(self, active):
+
+        if active == "normal":
+            active = False
+        else:
+            active = True
+
         sysConfig.set("background_image", "see_through", str(active))
 
         if active:

@@ -7,23 +7,16 @@
         size_hint: None, None
         opacity: 0
 
-    FloatLayout:
-        pos_hint: {"right": 1, "top": 1}
-        size_hint: 1, 1
 
-        Switch:
-            id: SeeThrough
+    ToggleButton:
+        id: SeeThrough
 
-            size_hint:(0.15,0.1)
-            pos_hint: {"right": 1, "top": 1}
+        size_hint: 0.2, 0.05
+        pos_hint: {"x": 0, "top": 1}
 
-            on_active: root.see_through_flip(args[1])
-            active: True
+        text: "See through window"
 
-        Label:
-            size_hint:(0.15,0.1)
-            text: 'See Through Window'
-            pos_hint: {"top": 1}
-            right: SeeThrough.x
+        on_state: root.see_through_flip(args[1])
+        state: "down"
 
 
