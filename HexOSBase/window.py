@@ -17,23 +17,25 @@ class Window(FloatLayout):
         super(Window, self).__init__(*args, **kwargs)
 
         CoreWindow.bind(left=self.on_pos, top=self.on_pos)
-        CoreWindow.bind(on_show=self.take_screenshot_clock_stop)
-        CoreWindow.bind(on_hide=self.take_screenshot_clock_start)
-
 
         Clock.schedule_once(self.take_whole_screen_screenshot, 0)
-        Clock.schedule_once(CoreWindow.hide, 2)
-        Clock.schedule_once(CoreWindow.show, 5)
         Clock.schedule_interval(self.take_not_window_screenshot, int(sysConfig.get("background_image",
                                                                                    "open_refresh_rate")))
 
+    def on_parent(self, *args):
+        if (sysConfig.get("background_image", "see_through") == "True"):
+            self.ids["parentScreenImage"].opacity = 1
+        else:
+            self.ids["parentScreenImage"].opacity = 0
+
     def on_pos(self, *args):
-        if bool(sysConfig.get("background_image", "see_through")):
+        if sysConfig.get("background_image", "see_through") == "True":
             self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, \
-                                                (CoreWindow.top + CoreWindow.height) - self.ids["parentScreenImage"].size[1]
+                                                (CoreWindow.top + CoreWindow.height) - \
+                                                self.ids["parentScreenImage"].size[1]
 
     def take_whole_screen_screenshot(self, *args):
-        if bool(sysConfig.get("background_image", "see_through")):
+        if sysConfig.get("background_image", "see_through") == "True":
             img = ImageGrab.grab()
             data = BytesIO()
             img.save(data, format="png")
@@ -45,14 +47,15 @@ class Window(FloatLayout):
             self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, 0 - CoreWindow.top
 
     def take_not_window_screenshot(self, *args):
-        if bool(sysConfig.get("background_image", "see_through")):
+        if sysConfig.get("background_image", "see_through") == "True":
             img = ImageGrab.grab()
 
             try:
                 im = CoreImage(self.ids["parentScreenImage"].texture)
 
             except Exception:
-                Logger.warning(sysConfig.get("main", "parent_name") + ": Window background image does not have a texture")
+                Logger.warning(sysConfig.get("main", "parent_name") +
+                               ": Window background image does not have a texture")
                 return
 
             data = BytesIO()
@@ -79,7 +82,7 @@ class Window(FloatLayout):
 
 
     def take_screenshot_clock_start(self, *args):
-        self.screenShotClock = Clock.schedule_interval(self.take_screenshot,
+        self.screenShotClock = Clock.schedule_interval(self.take_whole_screen_screenshot,
                                                        int(sysConfig.get("background_image", "minimized_refresh_rate")))
 
     def take_screenshot_clock_stop(self, *args):

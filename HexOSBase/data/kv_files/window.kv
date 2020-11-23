@@ -1,5 +1,28 @@
+#:import sysConfig globals.sysConfig
+
 <Window>:
     Image:
         id: parentScreenImage
 
         size_hint: None, None
+        opacity: 0
+
+    FloatLayout:
+        pos_hint: {"right": 1, "top": 1}
+        size_hint: 1, 1
+
+        Switch:
+            id: SeeThrough
+
+            size_hint:(None,None)
+            pos_hint: {"right": 1, "top": 1}
+
+            on_active: sysConfig.set("background_image", "see_through", str(args[1]))
+
+        Label:
+            size_hint:(None,None)
+            text: 'power up'
+            pos_hint: {"top": 1}
+            right: SeeThrough.x
+
+
