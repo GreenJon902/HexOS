@@ -27,11 +27,11 @@ class Window(FloatLayout):
     def on_parent(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
             self.ids["ParentScreenImage"].opacity = 1
-            self.ids["SeeThrough"].state = "down"
+            self.ids["SeeThroughButton"].state = "down"
             
         else:
             self.ids["ParentScreenImage"].opacity = 0
-            self.ids["SeeThrough"].state = "normal"
+            self.ids["SeeThroughButton"].state = "normal"
 
     def on_pos(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
@@ -63,9 +63,7 @@ class Window(FloatLayout):
                                ": Window background image does not have a texture")
 
                 if shouldWholeWindowIfNone:
-                    CoreWindow.hide()
-                    Clock.schedule_once(lambda *args: self.take_whole_screen_screenshot(), 0.1)
-                    Clock.schedule_once(lambda *args: CoreWindow.show(), 0.2)
+                    self.minimize_screenshot()
 
                 return
 
@@ -110,6 +108,9 @@ class Window(FloatLayout):
 
         sysConfig.set("background_image", "see_through", str(active))
 
+        self.ids["StrongRefreshButton"].disabled = not active
+        self.ids["WeakRefreshButton"].disabled = not active
+
         if active:
             self.take_not_window_screenshot(shouldWholeWindowIfNone=True)
             self.on_pos()
@@ -124,3 +125,8 @@ class Window(FloatLayout):
 
             Clock.schedule_once(lambda *args: a.start(self.ids["ParentScreenImage"]),
                                 float(sysConfig.get("background_image", "fade_wait")))
+
+    def minimize_screenshot(self, *args):
+        CoreWindow.hide()
+        Clock.schedule_once(lambda *args: self.take_whole_screen_screenshot(), 0.1)
+        Clock.schedule_once(lambda *args: CoreWindow.show(), 0.2)

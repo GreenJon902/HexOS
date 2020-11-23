@@ -9,14 +9,35 @@
 
 
     ToggleButton:
-        id: SeeThrough
+        id: SeeThroughButton
 
-        size_hint: 0.2, 0.05
+        size_hint: None, 0.05
+        width: 150
         pos_hint: {"x": 0, "top": 1}
 
         text: "See through window"
 
         on_state: root.see_through_flip(args[1])
         state: "down"
+
+    Button:
+        id: StrongRefreshButton
+        size_hint: None, 0.05
+        width: 110
+        pos_hint: {"x": 0, "top": 0.95}
+
+        text: "Strong refresh"
+
+        on_press: root.minimize_screenshot()
+
+    Button:
+        id: WeakRefreshButton
+        size_hint: None, 0.05
+        width: 105
+        pos_hint: {"x": 0, "top": 0.9}
+
+        text: "Weak refresh"
+
+        on_press: root.take_not_window_screenshot()
 
 
