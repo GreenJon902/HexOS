@@ -24,6 +24,14 @@ class Window(FloatLayout):
         Clock.schedule_interval(self.take_not_window_screenshot, int(sysConfig.get("background_image",
                                                                                    "open_refresh_rate")))
 
+        Logger.info(sysConfig.get("main", "parent_name") + ": Window class has initiated")
+
+        if sysConfig.get("background_image", "see_through") == "True":
+            Logger.info(sysConfig.get("main", "parent_name") + ": Window was created see through")
+
+        else:
+            Logger.info(sysConfig.get("main", "parent_name") + ": Window was created not see through")
+
     def on_parent(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
             self.ids["ParentScreenImage"].opacity = 1
@@ -32,6 +40,7 @@ class Window(FloatLayout):
         else:
             self.ids["ParentScreenImage"].opacity = 0
             self.ids["SeeThroughButton"].state = "normal"
+
 
     def on_pos(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
@@ -103,8 +112,12 @@ class Window(FloatLayout):
 
         if active == "normal":
             active = False
+            Logger.info(sysConfig.get("main", "parent_name") + ": Window is now not see through")
         else:
             active = True
+            Logger.info(sysConfig.get("main", "parent_name") + ": Window is now see through")
+
+
 
         sysConfig.set("background_image", "see_through", str(active))
 
