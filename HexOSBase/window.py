@@ -2,6 +2,7 @@ from io import BytesIO
 
 from PIL import ImageGrab, Image as PILImage
 from kivy import Logger
+from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window as CoreWindow
@@ -17,22 +18,26 @@ class Window(FloatLayout):
         super(Window, self).__init__(*args, **kwargs)
 
         CoreWindow.bind(left=self.on_pos, top=self.on_pos)
+        CoreWindow.bind(on_hide=self.take_screenshot_clock_start, on_show=self.take_screenshot_clock_stop)
 
         Clock.schedule_once(self.take_whole_screen_screenshot, 0)
         Clock.schedule_interval(self.take_not_window_screenshot, int(sysConfig.get("background_image",
                                                                                    "open_refresh_rate")))
 
     def on_parent(self, *args):
-        if (sysConfig.get("background_image", "see_through") == "True"):
-            self.ids["parentScreenImage"].opacity = 1
+        if sysConfig.get("background_image", "see_through") == "True":
+            self.ids["ParentScreenImage"].opacity = 1
+            self.ids["SeeThrough"].active = True
+            
         else:
-            self.ids["parentScreenImage"].opacity = 0
+            self.ids["ParentScreenImage"].opacity = 0
+            self.ids["SeeThrough"].active = False
 
     def on_pos(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
-            self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, \
+            self.ids["ParentScreenImage"].pos = 0 - CoreWindow.left, \
                                                 (CoreWindow.top + CoreWindow.height) - \
-                                                self.ids["parentScreenImage"].size[1]
+                                                self.ids["ParentScreenImage"].size[1]
 
     def take_whole_screen_screenshot(self, *args):
         if sysConfig.get("background_image", "see_through") == "True":
@@ -42,20 +47,26 @@ class Window(FloatLayout):
             data.seek(0)
             img = CoreImage(BytesIO(data.read()), ext='png')
 
-            self.ids["parentScreenImage"].texture = img.texture
-            self.ids["parentScreenImage"].size = img.size
-            self.ids["parentScreenImage"].pos = 0 - CoreWindow.left, 0 - CoreWindow.top
+            self.ids["ParentScreenImage"].texture = img.texture
+            self.ids["ParentScreenImage"].size = img.size
+            self.ids["ParentScreenImage"].pos = 0 - CoreWindow.left, 0 - CoreWindow.top
 
-    def take_not_window_screenshot(self, *args):
+    def take_not_window_screenshot(self, shouldWholeWindowIfNone=False, *args):
         if sysConfig.get("background_image", "see_through") == "True":
             img = ImageGrab.grab()
 
             try:
-                im = CoreImage(self.ids["parentScreenImage"].texture)
+                im = CoreImage(self.ids["ParentScreenImage"].texture)
 
             except Exception:
                 Logger.warning(sysConfig.get("main", "parent_name") +
                                ": Window background image does not have a texture")
+
+                if shouldWholeWindowIfNone:
+                    CoreWindow.hide()
+                    Clock.schedule_once(lambda *args: self.take_whole_screen_screenshot(), 0.1)
+                    Clock.schedule_once(lambda *args: CoreWindow.show(), 0.2)
+
                 return
 
             data = BytesIO()
@@ -76,7 +87,7 @@ class Window(FloatLayout):
             data.seek(0)
             img = CoreImage(BytesIO(data.read()), ext='png')
 
-            self.ids["parentScreenImage"].texture = img.texture
+            self.ids["ParentScreenImage"].texture = img.texture
 
 
 
@@ -89,3 +100,21 @@ class Window(FloatLayout):
         if self.screenShotClock is not None:
             self.screenShotClock.cancel()
             self.screenShotClock = None
+
+    def see_through_flip(self, active):
+        sysConfig.set("background_image", "see_through", str(active))
+
+        if active:
+            self.take_not_window_screenshot(shouldWholeWindowIfNone=True)
+            self.on_pos()
+
+            a = Animation(opacity=1, duration=float(sysConfig.get("background_image", "fade_time")))
+
+            Clock.schedule_once(lambda *args: a.start(self.ids["ParentScreenImage"]),
+                                float(sysConfig.get("background_image", "fade_wait")))
+
+        else:
+            a = Animation(opacity=0, duration=float(sysConfig.get("background_image", "fade_time")))
+
+            Clock.schedule_once(lambda *args: a.start(self.ids["ParentScreenImage"]),
+                                float(sysConfig.get("background_image", "fade_wait")))

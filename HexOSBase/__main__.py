@@ -17,5 +17,4 @@ class HexOS(App):
 
 
     def on_close(self, *args):
-        print(sysConfig.get("background_image", "see_through"))
         sysConfig.write(open(os.path.join(path, "HexOSBase/data/config_files/sys_config.ini"), "w"))

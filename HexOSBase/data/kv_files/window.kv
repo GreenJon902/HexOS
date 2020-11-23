@@ -2,7 +2,7 @@
 
 <Window>:
     Image:
-        id: parentScreenImage
+        id: ParentScreenImage
 
         size_hint: None, None
         opacity: 0
@@ -17,7 +17,8 @@
             size_hint:(None,None)
             pos_hint: {"right": 1, "top": 1}
 
-            on_active: sysConfig.set("background_image", "see_through", str(args[1]))
+            on_active: root.see_through_flip(args[1])
+            active: True
 
         Label:
             size_hint:(None,None)
