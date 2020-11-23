@@ -14,15 +14,15 @@
         Switch:
             id: SeeThrough
 
-            size_hint:(None,None)
+            size_hint:(0.15,0.1)
             pos_hint: {"right": 1, "top": 1}
 
             on_active: root.see_through_flip(args[1])
             active: True
 
         Label:
-            size_hint:(None,None)
-            text: 'power up'
+            size_hint:(0.15,0.1)
+            text: 'See Through Window'
             pos_hint: {"top": 1}
             right: SeeThrough.x
 
