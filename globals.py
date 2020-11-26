@@ -1,7 +1,7 @@
-from configparser import ConfigParser as CP
+from configparser import ConfigParser as Cp
 
 
-class ConfigParser(CP):
+class ConfigParser(Cp):
     def get(self, *args, **kwargs):
         value = super(ConfigParser, self).get(*args, **kwargs)
         try:

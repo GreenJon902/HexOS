@@ -16,7 +16,6 @@ if __name__ == '__main__':
 
     globals.HexOSPath = os.path.join(user_data_dir(globals.baseSysConfig.get("main", "name")),
                                      globals.baseSysConfig.get("HexOS", "folder_name"))
-    print(globals.HexOSPath)
 
     HexOSBase.setup_os()
     HexOSBase.start_os()
