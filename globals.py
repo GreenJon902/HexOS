@@ -4,7 +4,6 @@ from configparser import ConfigParser as CP
 class ConfigParser(CP):
     def get(self, *args, **kwargs):
         value = super(ConfigParser, self).get(*args, **kwargs)
-
         try:
             return int(value)
 
@@ -16,7 +15,7 @@ class ConfigParser(CP):
                 if value == "True":
                     return True
                 if value == "False":
-                    return True
+                    return False
                 else:
                     return str(value)
 
