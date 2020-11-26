@@ -16,3 +16,5 @@ if __name__ == '__main__':
 
     HexOSBase.setup_os()
     HexOSBase.start_os()
+
+__all__ = []

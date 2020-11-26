@@ -18,3 +18,6 @@ class HexOS(App):
 
     def on_close(self, *args):
         baseSysConfig.write(open(os.path.join(path, "HexOSBase/data/config_files/base_sys_config.ini"), "w"))
+
+
+__all__ = ["HexOS"]
