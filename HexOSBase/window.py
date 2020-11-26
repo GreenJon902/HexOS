@@ -8,7 +8,6 @@ from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window as CoreWindow
 from kivy.uix.floatlayout import FloatLayout
 
-from HexOSBase.baseSysConfigurator import BaseSysConfigurator
 from globals import baseSysConfig
 
 
@@ -22,7 +21,6 @@ class Window(FloatLayout):
         CoreWindow.bind(on_hide=self.take_screenshot_clock_start, on_show=self.take_screenshot_clock_stop)
 
         Clock.schedule_once(self.take_whole_screen_screenshot, 0)
-        Clock.schedule_once(self.je, 2)
         Clock.schedule_interval(self.take_not_window_screenshot, baseSysConfig.get("background_image",
                                                                                    "open_refresh_rate"))
 
@@ -139,9 +137,6 @@ class Window(FloatLayout):
         CoreWindow.hide()
         Clock.schedule_once(lambda *args: self.take_whole_screen_screenshot(), 0.1)
         Clock.schedule_once(lambda *args: CoreWindow.show(), 0.2)
-
-    def je(self, *args):
-        s = BaseSysConfigurator()
 
 
 __all__ = ["Window"]
