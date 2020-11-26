@@ -145,3 +145,6 @@ class Window(FloatLayout):
         CoreWindow.hide()
         Clock.schedule_once(lambda *args: self.take_whole_screen_screenshot(), 0.1)
         Clock.schedule_once(lambda *args: CoreWindow.show(), 0.2)
+
+    def je(self, *args):
+        s = BaseSysConfigurator()
