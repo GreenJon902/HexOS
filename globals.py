@@ -23,6 +23,7 @@ class ConfigParser(CP):
 baseSysConfig = ConfigParser()
 baseSysConfig.read("HexOSBase/data/config_files/base_sys_config.ini")
 
-path = ""
+baseSysPath = ""
+HexOSPath = ""
 
-__all__ = ["path", "baseSysConfig"]
+__all__ = ["baseSysPath", "baseSysConfig", "HexOSPath"]

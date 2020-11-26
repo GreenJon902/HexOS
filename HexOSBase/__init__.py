@@ -1,6 +1,7 @@
 import os
+import shutil
 
-from globals import path, baseSysConfig
+import globals
 
 
 def setup_os():
@@ -13,13 +14,27 @@ def setup_os():
 
     from kivy.logger import Logger
 
-    Logger.info(baseSysConfig.get("main", "name") + ": HexOSBase's logger has been setup")
+    Logger.info(globals.baseSysConfig.get("main", "name") + ": " + globals.baseSysConfig.get("main", "parent_name") +
+                "'s logger has been setup")
 
 
     from kivy.lang.builder import Builder
-    Builder.load_file(os.path.join(path, "HexOSBase/data/kv_files/window.kv"))
+    Builder.load_file(os.path.join(globals.baseSysPath, "HexOSBase/data/kv_files/window.kv"))
 
-    Logger.info(baseSysConfig.get("main", "parent_name") + ": window.kv has loaded")
+    Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": window.kv has loaded")
+
+    needToCopy = False
+
+    if not os.path.exists(globals.HexOSPath):
+        needToCopy = True
+
+    if globals.baseSysConfig.get("HexOS", "reinstall_every_time") or needToCopy:
+        Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Starting OS copy")
+
+        shutil.copytree(os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name") + "Files"),
+                        globals.HexOSPath)
+
+        Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Finished OS copy")
 
 
 def start_os():
@@ -27,7 +42,7 @@ def start_os():
 
     from kivy.logger import Logger
 
-    Logger.info(baseSysConfig.get("main", "parent_name") + ": " + baseSysConfig.get("main", "parent_name") + " is starting")
+    Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": " + globals.baseSysConfig.get("main", "parent_name") + " is starting")
 
     HexOS().run()
 
