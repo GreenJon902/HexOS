@@ -4,11 +4,11 @@ from kivy.app import App
 from kivy.core.window import Window as CoreWindow
 
 from HexOSBase.window import Window
-from globals import sysConfig, path
+from globals import baseSysConfig, path
 
 
 class HexOS(App):
-    title = sysConfig.get("main", "name")
+    title = baseSysConfig.get("main", "name")
 
     def build(self):
         CoreWindow.bind(on_request_close=self.on_close)
@@ -17,4 +17,4 @@ class HexOS(App):
 
 
     def on_close(self, *args):
-        sysConfig.write(open(os.path.join(path, "HexOSBase/data/config_files/sys_config.ini"), "w"))
+        baseSysConfig.write(open(os.path.join(path, "HexOSBase/data/config_files/base_sys_config.ini"), "w"))

@@ -1,6 +1,6 @@
 from configparser import ConfigParser
 
-sysConfig = ConfigParser()
-sysConfig.read("HexOSBase/data/config_files/sys_config.ini")
+baseSysConfig = ConfigParser()
+baseSysConfig.read("HexOSBase/data/config_files/base_sys_config.ini")
 
 path = ""
