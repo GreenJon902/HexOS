@@ -35,7 +35,6 @@ class Window(FloatLayout):
             Logger.info(baseSysConfig.get("main", "parent_name") + ": Window was created not see through")
 
     def on_parent(self, *args):
-        print(baseSysConfig.get("background_image", "see_through"), type(baseSysConfig.get("background_image", "see_through")))
         if baseSysConfig.get("background_image", "see_through"):
             self.ids["ParentScreenImage"].opacity = 1
             self.ids["SeeThroughButton"].state = "down"
