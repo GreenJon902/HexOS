@@ -7,7 +7,7 @@ from HexOSBase.window import Window
 from HexOSBase import globals
 
 
-class HexOS(App):
+class HexOSBase(App):
     title = globals.baseSysConfig.get("main", "name")
 
     def build(self):
@@ -20,4 +20,4 @@ class HexOS(App):
         globals.baseSysConfig.write(open(os.path.join(globals.baseSysPath, "HexOSBase/data/config_files/base_sys_config.ini"), "w"))
 
 
-__all__ = ["HexOS"]
+__all__ = ["HexOSBase"]

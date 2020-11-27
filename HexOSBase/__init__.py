@@ -31,14 +31,14 @@ def setup_os():
 
 
 def start_os():
-    from HexOSBase.__main__ import HexOS
+    from HexOSBase.__main__ import HexOSBase
 
     from kivy.logger import Logger
 
     Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": " + globals.baseSysConfig.get("main",
                                                                                                     "parent_name") + " is starting")
 
-    HexOS().run()
+    HexOSBase().run()
 
 
 __all__ = ["setup_os",
