@@ -4,7 +4,7 @@ from kivy.app import App
 from kivy.core.window import Window as CoreWindow
 
 from HexOSBase.window import Window
-import globals
+from HexOSBase import globals
 
 
 class HexOS(App):

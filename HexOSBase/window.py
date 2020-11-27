@@ -8,7 +8,7 @@ from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window as CoreWindow
 from kivy.uix.floatlayout import FloatLayout
 
-import globals
+from HexOSBase import globals
 
 
 class Window(FloatLayout):

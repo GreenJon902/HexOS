@@ -3,7 +3,7 @@ import sys
 from appdirs import user_data_dir
 
 import HexOSBase
-import globals
+from HexOSBase import globals
 
 if __name__ == '__main__':
     globals.baseSysPath = os.getcwd()

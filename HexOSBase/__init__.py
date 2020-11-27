@@ -1,7 +1,7 @@
 import os
 import shutil
 
-import globals
+from HexOSBase import globals
 
 
 def copytree(src, dst):
