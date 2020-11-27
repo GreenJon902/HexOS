@@ -2,7 +2,7 @@ import os
 import shutil
 
 
-def copytree(src, dst):
+def copytree(src, dst, bar):
 
     if not os.path.exists(dst):
         os.mkdir(dst)
@@ -11,11 +11,11 @@ def copytree(src, dst):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
         if os.path.isdir(s):
-            copytree(s, d)
-            print(item, 1)
+            copytree(s, d, bar)
         else:
-            print(item, 2)
             shutil.copy2(s, d)
+
+        bar.value = bar.value + 1
 
 
 __all__ = ["copytree"]
