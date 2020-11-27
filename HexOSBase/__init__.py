@@ -1,17 +1,8 @@
 import os
-import shutil
 
-from HexOSBase import globals
+from kivy.clock import Clock
 
-
-def copytree(src, dst):
-    for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s):
-            copytree(s, d)
-        else:
-            shutil.copy2(s, d)
+from HexOSBase import globals, os_changes
 
 
 def setup_os():
@@ -32,13 +23,11 @@ def setup_os():
 
     Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": window.kv has loaded")
 
-    if globals.baseSysConfig.get("HexOS", "reinstall_every_time"):
-        Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Starting OS copy")
+    if not os.path.exists(globals.HexOSPath):
+        Clock.schedule_once(lambda *args: os_changes.install(), 0)
 
-        copytree(os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name") + "Files"),
-                 globals.HexOSPath)
-
-        Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Finished OS copy")
+    if globals.baseSysConfig.get("HexOS", "update_on_start"):
+        Clock.schedule_once(lambda *args: os_changes.try_update(), 0)
 
 
 def start_os():
