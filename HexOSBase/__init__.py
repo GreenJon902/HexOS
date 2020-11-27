@@ -5,7 +5,7 @@ from kivy.clock import Clock
 from HexOSBase import globals, os_changes
 
 
-def setup_os():
+def setup_base():
     from kivy.config import Config
     Config.read(os.environ['KIVY_CONFIG_FILE'])
 
@@ -30,7 +30,7 @@ def setup_os():
         Clock.schedule_once(lambda *args: os_changes.try_update(), 0)
 
 
-def start_os():
+def start_base():
     from HexOSBase.__main__ import HexOSBase
 
     from kivy.logger import Logger
@@ -41,5 +41,5 @@ def start_os():
     HexOSBase().run()
 
 
-__all__ = ["setup_os",
-           "start_os"]
+__all__ = ["setup_base",
+           "start_base"]
