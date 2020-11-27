@@ -19,7 +19,6 @@ def try_update():
     if open(os.path.join(globals.baseSysPath,
                          globals.baseSysConfig.get("main", "name") + "Files", "OSVer"), "r").read() \
             != open(os.path.join(globals.HexOSPath, "OSVer"), "r").read():
-        print("fe")
         copy()
 
 
