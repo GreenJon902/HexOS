@@ -22,14 +22,8 @@ def setup_os():
 
     Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": window.kv has loaded")
 
-    needToCopy = False
 
-    if not os.path.exists(globals.HexOSPath):
-        os.mkdir(globals.HexOSPath)
-
-        needToCopy = True
-
-    if globals.baseSysConfig.get("HexOS", "reinstall_every_time") or needToCopy:
+    if globals.baseSysConfig.get("HexOS", "reinstall_every_time"):
         Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Starting OS copy")
 
         src = os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name") + "Files")
