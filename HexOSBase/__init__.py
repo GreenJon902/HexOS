@@ -4,6 +4,16 @@ import shutil
 import globals
 
 
+def copytree(src, dst):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            copytree(s, d)
+        else:
+            shutil.copy2(s, d)
+
+
 def setup_os():
     from kivy.config import Config
     Config.read(os.environ['KIVY_CONFIG_FILE'])
@@ -22,19 +32,11 @@ def setup_os():
 
     Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": window.kv has loaded")
 
-
     if globals.baseSysConfig.get("HexOS", "reinstall_every_time"):
         Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Starting OS copy")
 
-        src = os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name") + "Files")
-
-        for item in os.listdir(src):
-            s = os.path.join(src, item)
-            d = os.path.join(globals.HexOSPath, item)
-            if os.path.isdir(s):
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
+        copytree(os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name") + "Files"),
+                 globals.HexOSPath)
 
         Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": Finished OS copy")
 
