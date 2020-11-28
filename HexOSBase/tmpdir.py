@@ -14,11 +14,11 @@ def make_tmp_dir(doing):
         path = os.path.join(globals.userDataDir, "tmp", doing)
         os.mkdir(path)
 
-        Logger.info("tmp dir " + doing + " created")
+        Logger.info("HexOSBase: tmp dir " + doing + " created")
 
     except FileExistsError:
 
-        Logger.exception("Failed to create tmp folder named " + doing + ", creating a different named one")
+        Logger.error("HexOSBase: Failed to create tmp folder named " + doing + ", creating a different one")
         path = make_tmp_dir(doing + str(2))
 
     return path
@@ -36,10 +36,10 @@ def clear_tmp_dir():
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
 
-        Logger.info("tmp dir cleared")
+        Logger.info("HexOSBase: tmp dir cleared")
 
     except Exception as e:
-        Logger.exception("Failed to clear tmp folder - " + str(e))
+        Logger.error("HexOSBase: Failed to clear tmp folder - " + str(e))
 
 
 __all__ = ["clear_tmp_dir", "make_tmp_dir"]

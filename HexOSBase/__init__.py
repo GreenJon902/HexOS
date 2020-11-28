@@ -24,9 +24,10 @@ def setup_base():
     Logger.info(globals.baseSysConfig.get("main", "parent_name") + ": window.kv has loaded")
 
     if not os.path.exists(globals.HexOSPath):
+        Logger.error("HexOSBase: HexOS is not installed, queuing install")
         Clock.schedule_once(lambda *args: os_changes.install(), 0)
 
-    if globals.baseSysConfig.get("HexOS", "test_os"):
+    elif globals.baseSysConfig.get("HexOS", "test_os"):
         Clock.schedule_once(lambda *args: os_changes.try_update_for_testing(), 0)
 
 
