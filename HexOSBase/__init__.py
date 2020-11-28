@@ -26,8 +26,8 @@ def setup_base():
     if not os.path.exists(globals.HexOSPath):
         Clock.schedule_once(lambda *args: os_changes.install(), 0)
 
-    if globals.baseSysConfig.get("HexOS", "update_on_start"):
-        Clock.schedule_once(lambda *args: os_changes.try_update(), 0)
+    if globals.baseSysConfig.get("HexOS", "test_os"):
+        Clock.schedule_once(lambda *args: os_changes.try_update_for_testing(), 0)
 
 
 def start_base():

@@ -25,5 +25,6 @@ baseSysConfig.read("HexOSBase/data/config_files/base_sys_config.ini")
 
 baseSysPath = ""
 HexOSPath = ""
+userDataDir = ""
 
 __all__ = ["baseSysPath", "baseSysConfig", "HexOSPath"]

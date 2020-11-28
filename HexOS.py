@@ -7,6 +7,7 @@ from HexOSBase import globals
 
 if __name__ == '__main__':
     globals.baseSysPath = os.getcwd()
+    globals.userDataDir = user_data_dir(globals.baseSysConfig.get("main", "name"))
 
     sys.path.append(os.getcwd())
 
