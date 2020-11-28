@@ -58,8 +58,10 @@ def try_update_for_testing():
 def install():
     bar = window("install")
     tmpDir = make_tmp_dir("install")
+    Logger.info("HexOSBase: Started downloading the newest version of HexOS from github")
     Repo.clone_from("https://github.com/stemboy/HexOS", tmpDir)
     copy(bar, os.path.join(tmpDir, globals.baseSysConfig.get("main", "name") + "Files"))
+    Logger.info("HexOSBase: Finished downloading the newest version of HexOS from github")
 
 
 def window(doing):
