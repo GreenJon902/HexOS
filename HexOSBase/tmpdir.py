@@ -26,7 +26,7 @@ def make_tmp_dir(doing):
 
 def clear_tmp_dir():
     try:
-        folder = os.path.exists(os.path.join(globals.userDataDir, "tmp"))
+        folder = os.path.join(globals.userDataDir, "tmp")
 
         for filename in os.listdir(folder):
             file_path = os.path.join(folder, filename)
