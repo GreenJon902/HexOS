@@ -8,7 +8,6 @@ from kivy.uix.progressbar import ProgressBar
 
 from HexOSBase.functions import copytree
 from HexOSBase import globals
-import git
 
 from HexOSBase.tmpdir import make_tmp_dir
 
@@ -50,7 +49,8 @@ def window(doing):
         doing = "updat"
     doing = doing.title()
 
-    bar = ProgressBar(max=len(list(os.walk(os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name") + "Files")))))
+    bar = ProgressBar(max=len(list(os.walk(os.path.join(globals.baseSysPath, globals.baseSysConfig.get("main", "name")
+                                                        + "Files")))))
 
     popup = Popup(title=doing + "ing HexOS",
                   content=bar,
